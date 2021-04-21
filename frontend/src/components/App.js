@@ -16,7 +16,7 @@ import EditAvatarPopup from './popups/EditAvatarPopup'
 import AddPlacePopup from './popups/AddPlacePopup'
 import SubmitPopup from './popups/SubmitPopup'
 
-import { api, authApi } from '../utils/api'
+import api from '../utils/api'
 import ProtectedRoute from './ProtectedRoute'
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
@@ -153,7 +153,7 @@ function App() {
 
   //функции регистрации и авторизации
   function onSignUp(data) {
-    authApi
+    api
       .signUp(data)
       .then(() => {
         handleTooltipOpen(true)
@@ -170,7 +170,7 @@ function App() {
   }
 
   function onSignIn(data) {
-    authApi
+    api
       .signIn(data)
       .then((res) => {
         localStorage.setItem('token', res.token)
@@ -308,7 +308,7 @@ function App() {
 
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
-      authApi
+      api
         .checkToken()
         .then((data) => {
           setEmail(data.data.email)

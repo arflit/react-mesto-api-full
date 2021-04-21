@@ -98,16 +98,8 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-19',
+  baseUrl: 'https://api.mesto.flitman.ru',
   headers: {
-    authorization: '0ea9232f-20d8-4231-b26e-2828aaef49f5',
     'Content-Type': 'application/json',
-  },
-})
-
-export const authApi = new Api({
-  baseUrl: 'https://auth.nomoreparties.co',
-  headers: {
-    'Content-Type': 'application/json'
   },
 })

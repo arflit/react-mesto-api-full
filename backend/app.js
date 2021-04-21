@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const cors = require('cors');
+
 const router = require('./routes/index');
 
 const { PORT = 3000 } = process.env;
@@ -24,6 +26,10 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(helmet());
+app.use(cors({
+  origin: 'https://mesto.flitman.ru',
+  credentials: true,
+}));
 
 app.use('/', router);
 

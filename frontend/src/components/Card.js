@@ -25,7 +25,7 @@ function Card(props) {
     !isOwn && 'card__trash-button_hidden'
   }`
 
-  const isLiked = card.likes.some((i) => i._id === currentUser._id)
+  const isLiked = card.likes.some((i) => i === currentUser._id)
 
   const cardLikeButtonClassName = `button card__like ${
     isLiked && 'card__like_active'
@@ -40,7 +40,7 @@ function Card(props) {
         onClick={handleClick}
       />
       <div className="card__alt">
-        <h2 className="card__title">{name}{console.log(currentUser._id)}<{console.log(card.likes)}/h2>
+        <h2 className="card__title">{name}</h2>
         <div className="card__like-container">
           <button
             className={cardLikeButtonClassName}

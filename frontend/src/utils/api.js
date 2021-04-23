@@ -89,7 +89,7 @@ class Api {
   }
 
   removeCardLike(id) {
-    return this._apiRequest(`/cards//${id}likes`, 'DELETE')
+    return this._apiRequest(`/cards/${id}/likes`, 'DELETE')
   }
 
   removeCard(id) {

@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const ErrorWithStatusCode = require('./error-with-status-code');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 // eslint-disable-next-line consistent-return
 function auth(req, res, next) {
   if (!(req.cookies.jwt)) {
@@ -11,7 +13,7 @@ function auth(req, res, next) {
   let payload;
 
   try {
-    payload = jwt.verify(token, 'some-secret-key');
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
   } catch (err) {
     next(new ErrorWithStatusCode(401, 'Необходима авторизация'));
   }

@@ -173,7 +173,6 @@ function App() {
     api
       .signIn(data)
       .then((res) => {
-        localStorage.setItem('token', res.token)
         setLoggedIn(true)
         setEmail(data.email)
       })
@@ -186,9 +185,16 @@ function App() {
   }
 
   function onSignOut() {
-    setLoggedIn(false)
-    setMenuOpen(false)
-    localStorage.removeItem('token')
+    api
+      .signOut()
+      .then((res => {
+        console.log(res);
+        setLoggedIn(false);
+        setMenuOpen(false)
+      }))
+      .catch((err) => {
+        handleTooltipOpen(false, `Не получилось войти: ${err}`)
+      })
   }
 
   //функции управления данными пользователя
@@ -305,13 +311,13 @@ function App() {
   }
 
   // Функции при загрузке страницы
-
+// проверка логина и загрузка данных пользователя
   React.useEffect(() => {
-    if (localStorage.getItem('token')) {
       api
-        .checkToken()
+        .getUserInfo()
         .then((data) => {
-          setEmail(data.data.email)
+          setCurrentUser(data)
+          setEmail(data.email)
           setLoggedIn(true)
         })
         .then(() => {
@@ -319,41 +325,31 @@ function App() {
         })
         .catch((err) => {
           setLoggedIn(false)
-          handleTooltipOpen(false, `Не удалось авторизоваться: ${err}`)
         })
     }
-  }, [])
+  , [])
+
+
 
   React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((data) => {
-        setCurrentUser(data)
+    if (loggedIn) {
+      api
+        .getInitialCards()
+        .then((data) => {
+          if (Array.isArray(data) === true) {
+            setCards(data)
+          }
+        })
+        .catch((err) => {
+          handleTooltipOpen(
+            false,
+            `Не удалось загрузить карточки с сервера: ${err}`
+          )
       })
-      .catch((err) => {
-        handleTooltipOpen(
-          false,
-          `Не удалось загрузить данные пользователя: ${err}`
-        )
-      })
-  }, [email])
+    }
+  }, [loggedIn])
 
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((data) => {
-        if (Array.isArray(data) === true) {
-          setCards(data)
-        }
-      })
-      .catch((err) => {
-        handleTooltipOpen(
-          false,
-          `Не удалось загрузить карточки с сервера: ${err}`
-        )
-      })
-  }, [email])
-
+  //проверка, мобильная ли версия, и переключение вида меню
   React.useEffect(() => {
     const onScreenChange = () => {
       if (window.innerWidth < 620) {

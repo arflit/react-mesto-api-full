@@ -49,11 +49,8 @@ class Api {
     })
   }
 
-  checkToken() {
-    return this._apiRequest('/users/me', 'GET', null, {
-      'Content-Type': 'application/json',
-      'Authorization' : `Bearer ${localStorage.getItem('token')}`
-    })
+  signOut(data) {
+    return this._apiRequest('/signout', 'DELETE')
   }
 
   getUserInfo() {

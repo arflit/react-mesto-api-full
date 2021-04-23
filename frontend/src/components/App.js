@@ -86,7 +86,6 @@ function App() {
     setTooltipPopupState({
       ...tooltipPopupState,
       open: false,
-      result: false,
       message: '',
     })
     setSelectedCard({})
@@ -156,11 +155,11 @@ function App() {
     api
       .signUp(data)
       .then(() => {
-        handleTooltipOpen(true)
+        handleTooltipOpen(true, 'Вы успешно зарегистрировались!')
       })
       .then(() => {
+        onSignIn(data)
         setTimeout(() => {
-          onSignIn(data)
           closeAllPopups()
         }, 1500)
       })
@@ -173,9 +172,11 @@ function App() {
     api
       .signIn(data)
       .then((res) => {
-        setLoggedIn(true)
-        setEmail(data.email)
-      })
+        console.log(res);
+        setLoggedIn(true);
+        setCurrentUser(res);
+        setEmail(res.email);
+    })
       .then(() => {
         history.push('/cards')
       })

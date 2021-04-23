@@ -29,10 +29,7 @@ function PopupWithTooltip(props) {
           alt={result ? 'Успех!' : 'Ошибка!'}
         />
         <h2 className="popup__tooltip-title">
-          {result
-            ? 'Вы успешно зарегистрировались!'
-            : `Что-то пошло не так!
-Попробуйте ещё раз.`}
+          {message}
         </h2>
         <p className="popup__tooltip-message">{message}</p>
       </div>

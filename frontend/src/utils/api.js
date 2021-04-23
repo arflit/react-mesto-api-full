@@ -85,11 +85,11 @@ class Api {
   }
 
   addCardLike(id) {
-    return this._apiRequest(`/cards/likes/${id}`, 'PUT')
+    return this._apiRequest(`/cards/${id}/likes`, 'PUT')
   }
 
   removeCardLike(id) {
-    return this._apiRequest(`/cards/likes/${id}`, 'DELETE')
+    return this._apiRequest(`/cards//${id}likes`, 'DELETE')
   }
 
   removeCard(id) {
@@ -103,3 +103,5 @@ export const api = new Api({
     'Content-Type': 'application/json',
   },
 })
+
+

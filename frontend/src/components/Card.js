@@ -19,7 +19,7 @@ function Card(props) {
 
   const currentUser = React.useContext(CurrentUserContext)
 
-  const isOwn = card.owner._id === currentUser._id
+  const isOwn = card.owner === currentUser._id
 
   const cardDeleteButtonClassName = `button card__trash-button ${
     !isOwn && 'card__trash-button_hidden'
@@ -40,7 +40,7 @@ function Card(props) {
         onClick={handleClick}
       />
       <div className="card__alt">
-        <h2 className="card__title">{name}</h2>
+        <h2 className="card__title">{name}{console.log(currentUser._id)}<{console.log(card.likes)}/h2>
         <div className="card__like-container">
           <button
             className={cardLikeButtonClassName}

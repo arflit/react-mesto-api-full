@@ -16,7 +16,7 @@ import EditAvatarPopup from './popups/EditAvatarPopup'
 import AddPlacePopup from './popups/AddPlacePopup'
 import SubmitPopup from './popups/SubmitPopup'
 
-import api from '../utils/api'
+import { api } from '../utils/api'
 import ProtectedRoute from './ProtectedRoute'
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
@@ -248,7 +248,7 @@ function App() {
   const [deletingCard, setDelCard] = React.useState({})
 
   function handleCardDelete() {
-    const isOwn = deletingCard.owner._id === currentUser._id
+    const isOwn = deletingCard.owner === currentUser._id
     if (isOwn) {
       api
         .removeCard(deletingCard._id)
@@ -342,7 +342,9 @@ function App() {
     api
       .getInitialCards()
       .then((data) => {
-        setCards(data)
+        if (Array.isArray(data) === true) {
+          setCards(data)
+        }
       })
       .catch((err) => {
         handleTooltipOpen(

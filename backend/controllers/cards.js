@@ -4,7 +4,6 @@ const ErrorWithStatusCode = require('../middlewares/error-with-status-code');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
-    .orFail(new ErrorWithStatusCode(200, 'В базе данных нет карточек'))
     .then((cards) => {
       res.send(cards);
     })

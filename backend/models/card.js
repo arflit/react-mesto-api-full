@@ -12,7 +12,7 @@ const cardSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        return /^(https?\:\/\/)?[a-z0-9-_#@',;=*+()&$![\]~:?.\/]*\.(jpg|jpeg|png|gif)$/i.test(v);
+        return /^(https?:\/\/)(www\.)?([\da-z-.]+)\.([a-z.]{2,6})[\da-zA-Z-._~:?#[\]@!$&'()*+,;=/]*\/?#?$/i.test(v);
       },
       message: 'передан некорректный URL изображения',
     },
